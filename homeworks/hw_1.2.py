@@ -21,9 +21,10 @@ access_token = input('\nВведите токен доступа: ')
 
 response = requests.get(
     f'https://api.vk.com/method/groups.get?extended=1&access_token={access_token}&v=5.131').json()
-with open('task02_response.json', 'w') as file:
-    json.dump(response, file)
 
 print('\nСписок сообществ, на которые вы подписаны')
 for group in response['response']['items']:
     print(f"{group['name']}")
+
+# with open('task02_response.json', 'w') as file:
+    #json.dump(response, file)

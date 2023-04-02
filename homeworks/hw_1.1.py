@@ -17,5 +17,5 @@ print(f'\nСписок репозиториев пользователя {user}:
 for i in response:
     print(f"{i['name']} - {i['description']}")
 
-with open('task01_response.json', 'w') as outfile:
-    json.dump(response, outfile)
+# with open('task01_response.json', 'w') as outfile:
+    # json.dump(response, outfile)
