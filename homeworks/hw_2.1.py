@@ -50,15 +50,15 @@ def search_similar_vacancies(vacancy_name):
         vacancy_data = []
         vacancies = response.json()['items']
 
-        for vacancy in vacancies:
+        for i in vacancies:
             vacancy_data.append({
-                "vacancy_name": vacancy['name'],
-                "company_name": vacancy['employer']['name'],
-                "city": vacancy['area']['name'],
-                "salary_min": vacancy['salary']['from'] if vacancy['salary'] else None,
-                "salary_max": vacancy['salary']['to'] if vacancy['salary'] else None,
-                "salary_currency": vacancy['salary']['currency'] if vacancy['salary'] else None,
-                # "vacancy_link": vacancy['apply_alternate_url'],
+                "vacancy_name": i['name'],
+                "company_name": i['employer']['name'],
+                "city": i['area']['name'],
+                "salary_min": i['salary']['from'] if i['salary'] else None,
+                "salary_max": i['salary']['to'] if i['salary'] else None,
+                "salary_currency": i['salary']['currency'] if i['salary'] else None,
+                # "vacancy_link": i['apply_alternate_url'],
                 "site": "hh.ru"
             })
 
