@@ -1,9 +1,3 @@
-'''
-1. Посмотреть документацию к API GitHub,
-разобраться как вывести список репозиториев
-для конкретного пользователя, сохранить JSON-вывод в файле *.json.
-'''
-
 import requests
 import json
 
@@ -17,5 +11,5 @@ print(f'\nСписок репозиториев пользователя {user}:
 for i in response:
     print(f"{i['name']} - {i['description']}")
 
-# with open('task01_response.json', 'w') as outfile:
+# with open('repositories_response.json', 'w') as outfile:
     # json.dump(response, outfile)

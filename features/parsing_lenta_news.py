@@ -1,17 +1,7 @@
-'''
-1. Написать приложение, которое собирает основные новости с сайта на выбор
-   news.mail.ru, lenta.ru, yandex-новости.
-   Для парсинга использовать XPath. Структура данных должна содержать:
-        название источника;
-        наименование новости;
-        ссылку на новость;
-        дата публикации.
-2. Сложить собранные данные в БД
-'''
-
-from pymongo import MongoClient, InsertOne
+from pymongo import MongoClient
 from lxml import html
 import requests
+from pprint import pprint
 
 
 def parse_lenta():
@@ -62,17 +52,25 @@ def write_to_db():
     db = client['news']
     collection_name = 'lenta_db'
 
-    # Если коллекция уже существует, удаляем ее
-    if collection_name in db.list_collection_names():
-        db.drop_collection(collection_name)
+    # Получаем ссылки на уже сохраненные новости
+    existing_links = set()
+    for document in db[collection_name].find({}, {'link': 1}):
+        existing_links.add(document['link'])
 
-    # Вставляем данные в базу данных
-    collection = db[collection_name]
-    bulk_write = [InsertOne(item) for item in data]
-    collection.bulk_write(bulk_write)
+    # Вставляем только новые данные в базу данных
+    new_data = []
+    for item in data:
+        if item['link'] not in existing_links:
+            new_data.append(item)
+    if new_data:
+        db[collection_name].insert_many(new_data)
 
     # Выводим количество записей в базе данных
-    print(f"{collection.count_documents({})} записей в базе данных.")
+    print(f"{db[collection_name].count_documents({})} записей в базе данных.")
+
+    # Выводим записи в терминал из базы данных
+    for document in db[collection_name].find({}, {'title': 1, 'date': 1}):
+        pprint(document)
 
 
 if __name__ == '__main__':
