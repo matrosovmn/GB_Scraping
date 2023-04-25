@@ -1,10 +1,12 @@
 import os
 from dotenv import load_dotenv
 from selenium import webdriver  # https://chromedriver.chromium.org/downloads
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
 from pymongo import MongoClient
 import time
@@ -21,10 +23,9 @@ chrome_options = Options()
 chrome_options.add_argument('start-maximized')
 driver = webdriver.Chrome(
     executable_path='./chromedriver.exe',
-    options=chrome_options
-)
+    options=chrome_options)
 
-# Открываем страницу
+# переходим на страницу логина
 driver.get(url)
 
 # Вводим логин
