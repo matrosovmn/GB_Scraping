@@ -1,7 +1,6 @@
 import os
 import time
 import re
-import logging
 from dotenv import load_dotenv
 from pymongo import MongoClient
 from selenium import webdriver
